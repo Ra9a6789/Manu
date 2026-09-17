@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#130b18">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Petição pública fictícia pela volta dos bolos de pote da Manuela.">
+  <title>Manuela, volte a vender bolos de pote</title>
+
+  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap)" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #100912;
+      --bg-soft: #1a0d18;
+      --ink: #fff8f0;
+      --muted: #d7c8d2;
+      --pink: #ff719b;
+      --pink-soft: #ffadc4;
+      --gold: #ffd487;
+      --brown: #9d573b;
+      --green: #8bf0ba;
+      --danger: #ff8b98;
+      --glass: rgba(255, 244, 238, 0.085);
+      --glass-strong: rgba(255, 247, 242, 0.13);
+      --stroke: rgba(255, 255, 255, 0.16);
+      --stroke-soft: rgba(255, 255, 255, 0.09);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+      --ease: cubic-bezier(.2, .8, .2, 1);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-width: 280px;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 6%, rgba(255, 108, 154, .16), transparent 33rem),
+        radial-gradient(circle at 90% 20%, rgba(255, 205, 120, .12), transparent 30rem),
+        linear-gradient(180deg, #120a14 0%, #160b13 45%, #0d0810 100%);
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    ::selection {
+      color: #1a0c12;
+      background: var(--pink-soft);
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(255, 212, 135, .9);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 9999;
+      top: 8px;
+      left: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: #1a0c12;
+      background: white;
+      transform: translateY(-150%);
+      transition: transform .2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .ambient {
+      position: fixed;
+      z-index: -3;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ambient::before {
+      content: "";
+      position: absolute;
+      inset: -25%;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(255, 106, 152, .18), transparent 18%),
+        radial-gradient(circle at 73% 40%, rgba(255, 203, 117, .12), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(134, 72, 255, .08), transparent 22%);
+      filter: blur(34px);
+      animation: ambient-drift 20s ease-in-out infinite alternate;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      opacity: .25;
+      filter: blur(2px);
+      animation: float-orb 12s ease-in-out infinite;
+    }
+
+    .orb.one {
+      width: 180px;
+      height: 180px;
+      top: 11%;
+      left: -100px;
+      background: rgba(255, 112, 153, .22);
+    }
+
+    .orb.two {
+      width: 140px;
+      height: 140px;
+      top: 58%;
+      right: -90px;
+      background: rgba(255, 213, 135, .18);
+      animation-delay: -4s;
+    }
+
+    .orb.three {
+      width: 90px;
+      height: 90px;
+      top: 78%;
+      left: 8%;
+      background: rgba(169, 111, 255, .13);
+      animation-delay: -8s;
+    }
+
+    .particles {
+      position: absolute;
+      inset: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      left: var(--left);
+      top: var(--top);
+      border-radius: 50%;
+      opacity: var(--opacity);
+      background: rgba(255, 240, 219, .9);
+      box-shadow: 0 0 12px rgba(255, 223, 175, .55);
+      animation: particle-float var(--duration) ease-in-out var(--delay) infinite alternate;
+    }
+
+    .shell {
+      width: min(100% - 28px, 1160px);
+      margin-inline: auto;
+    }
+
+    .glass {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .145), rgba(255, 255, 255, .045) 38%, rgba(255, 255, 255, .075)),
+        var(--glass);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        inset 0 -1px 0 rgba(255, 255, 255, .04),
+        var(--shadow);
+      backdrop-filter: blur(22px) saturate(135%);
+      -webkit-backdrop-filter: blur(22px) saturate(135%);
+    }
+
+    .glass::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 55%;
+      height: 120%;
+      top: -65%;
+      left: -20%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, .19), transparent 65%);
+      transform: rotate(20deg);
+      pointer-events: none;
+    }
+
+    .site-header {
+      position: fixed;
+      z-index: 1000;
+      top: calc(var(--safe-top) + 8px);
+      left: 50%;
+      width: min(calc(100% - 20px), 1160px);
+      transform: translateX(-50%);
+      transition:
+        transform .5s var(--ease),
+        opacity .35s ease;
+    }
+
+    .site-header.hidden {
+      opacity: .4;
+      transform: translate(-50%, calc(-100% - 20px));
+    }
+
+    .header-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 70px;
+      padding: 10px 11px 10px 15px;
+      border-radius: 23px;
+      transition: min-height .35s var(--ease), padding .35s var(--ease);
+    }
+
+    .site-header.compact .header-inner {
+      min-height: 58px;
+      padding-block: 7px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand-title {
+      display: -webkit-box;
+      margin: 0;
+      overflow: hidden;
+      color: white;
+      font-size: clamp(.77rem, 3.1vw, .92rem);
+      font-weight: 800;
+      line-height: 1.17;
+      letter-spacing: .025em;
+      text-transform: uppercase;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .brand-subtitle {
+      display: block;
+      margin-top: 2px;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: clamp(.66rem, 2.55vw, .77rem);
+      line-height: 1.2;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .brand-alert {
+      display: none;
+      margin-top: 3px;
+      color: var(--gold);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .header-sign {
+      display: none;
+    }
+
+    .audio-control {
+      display: flex;
+      align-items: center;
+      min-width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 16px;
+      color: white;
+      background: rgba(255, 255, 255, .08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16);
+    }
+
+    .audio-toggle {
+      display: grid;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .audio-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .equalizer {
+      display: flex;
+      align-items: end;
+      gap: 2px;
+      height: 16px;
+    }
+
+    .equalizer span {
+      width: 2px;
+      height: 35%;
+      border-radius: 2px;
+      background: var(--gold);
+    }
+
+    .audio-control.playing .equalizer span {
+      animation: equalize .75s ease-in-out infinite alternate;
+    }
+
+    .audio-control.playing .equalizer span:nth-child(2) {
+      animation-delay: -.26s;
+    }
+
+    .audio-control.playing .equalizer span:nth-child(3) {
+      animation-delay: -.48s;
+    }
+
+    .volume-wrap {
+      display: none;
+      align-items: center;
+      width: 88px;
+      padding-right: 12px;
+    }
+
+    .volume {
+      width: 100%;
+      accent-color: var(--pink);
+      cursor: pointer;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: min(820px, 100svh);
+      align-items: end;
+      padding: calc(106px + var(--safe-top)) 0 24px;
+      overflow: hidden;
+    }
+
+    .hero-media {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: saturate(.9) contrast(1.04) brightness(.66);
+      transform: scale(1.06);
+      will-change: transform;
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10, 6, 12, .38), rgba(14, 7, 12, .12) 32%, rgba(14, 8, 13, .85) 85%, var(--bg) 100%),
+        linear-gradient(90deg, rgba(15, 7, 13, .36), transparent 70%);
+    }
+
+    .hero-content {
+      width: 100%;
+    }
+
+    .hero-copy {
+      max-width: 820px;
+      padding: 19px;
+      border-radius: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 0 0 rgba(255, 113, 155, .65);
+      animation: pulse 2s infinite;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2.15rem, 9.2vw, 5.3rem);
+      font-weight: 800;
+      line-height: .94;
+      letter-spacing: -.045em;
+      text-wrap: balance;
+      text-shadow: 0 10px 38px rgba(0, 0, 0, .55);
+    }
+
+    .hero h1 span {
+      color: var(--pink-soft);
+    }
+
+    .hero-lead {
+      max-width: 650px;
+      margin: 15px 0 0;
+      color: #f6e9ef;
+      font-size: clamp(1rem, 4vw, 1.28rem);
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .hero-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 17px;
+      color: white;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06)),
+        rgba(255, 255, 255, .08);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        0 14px 32px rgba(0, 0, 0, .28);
+      font-size: .88rem;
+      font-weight: 800;
+      letter-spacing: .045em;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition:
+        transform .25s var(--ease),
+        box-shadow .25s ease,
+        background .25s ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: -80%;
+      left: -40%;
+      width: 30%;
+      height: 260%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .35), transparent);
+      transform: rotate(25deg) translateX(-200%);
+      transition: transform .8s var(--ease);
+      pointer-events: none;
+    }
+
+    .btn:hover::after {
+      transform: rotate(25deg) translateX(600%);
+    }
+
+    .btn:active {
+      transform: scale(.97) translateY(1px);
+    }
+
+    .btn-primary {
+      border-color: rgba(255, 174, 197, .5);
+      color: #210c14;
+      background: linear-gradient(135deg, #fff0d7, #ffabc6 46%, #ff749e);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .75),
+        0 16px 36px rgba(255, 81, 137, .26);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, .065);
+    }
+
+    .btn-small {
+      min-height: 44px;
+      padding: 9px 15px;
+      border-radius: 14px;
+      font-size: .72rem;
+    }
+
+    .section {
+      position: relative;
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin: 0 0 26px;
+    }
+
+    .section-heading.centered {
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem, 8.5vw, 4.1rem);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+
+    .section-heading p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: clamp(.96rem, 3.7vw, 1.08rem);
+    }
+
+    .petition-wrap {
+      margin-top: -4px;
+    }
+
+    .petition-card {
+      padding: 20px;
+      border-radius: 30px;
+    }
+
+    .petition-grid {
+      display: grid;
+      gap: 26px;
+    }
+
+    .petition-label {
+      margin: 0 0 8px;
+      color: var(--pink-soft);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .petition-card h2 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2.2rem, 9.5vw, 4.2rem);
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .petition-quote {
+      margin: 18px 0 0;
+      color: #f3e8ee;
+      font-size: clamp(.98rem, 3.9vw, 1.16rem);
+    }
+
+    .petition-note {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .petition-note svg {
+      flex: 0 0 auto;
+      width: 18px;
+      margin-top: 3px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .stat {
+      min-width: 0;
+      padding: 14px 12px;
+      border: 1px solid var(--stroke-soft);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .055);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+    }
+
+    .stat-value {
+      display: block;
+      overflow-wrap: anywhere;
+      color: white;
+      font-size: clamp(1.28rem, 6vw, 2.1rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.04em;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+
+    .progress-box {
+      margin-top: 14px;
+      padding: 15px;
+      border: 1px solid var(--stroke-soft);
+      border-radius: 20px;
+      background: rgba(7, 3, 8, .2);
+    }
+
+    .progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .progress-meta strong {
+      color: white;
+    }
+
+    .progress-track {
+      height: 14px;
+      padding: 3px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .32);
+    }
+
+    .progress-fill {
+      position: relative;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--pink), var(--gold));
+      box-shadow: 0 0 18px rgba(255, 116, 158, .5);
+      transition: width 1.2s var(--ease);
+    }
+
+    .progress-fill::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .7), transparent);
+      animation: progress-shine 2.6s linear infinite;
+    }
+
+    .petition-action {
+      display: grid;
+      gap: 9px;
+      margin-top: 15px;
+    }
+
+    .activity-panel {
+      padding: 18px;
+      border-radius: 25px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border: 1px solid rgba(139, 240, 186, .2);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(139, 240, 186, .08);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .activity-list {
+      display: grid;
+      max-height: 330px;
+      gap: 9px;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, .18) transparent;
+    }
+
+    .activity-item {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .045);
+      animation: activity-in .6s var(--ease) both;
+    }
+
+    .activity-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 12px;
+      color: #260e18;
+      background: linear-gradient(135deg, var(--gold), var(--pink-soft));
+      font-size: .9rem;
+      font-weight: 900;
+    }
+
+    .activity-item p {
+      margin: 0;
+      color: #f5ebf0;
+      font-size: .78rem;
+      line-height: 1.35;
+    }
+
+    .activity-item time {
+      display: block;
+      margin-top: 2px;
+      color: #aa99a5;
+      font-size: .67rem;
+    }
+
+    .reasons {
+      display: grid;
+      gap: 12px;
+    }
+
+    .reason-card {
+      min-height: 170px;
+      padding: 19px;
+      border-radius: 24px;
+      transform: translateY(22px);
+      opacity: 0;
+      transition:
+        transform .8s var(--ease),
+        opacity .7s ease,
+        border-color .25s ease;
+    }
+
+    .reason-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reason-card:hover {
+      border-color: rgba(255, 174, 197, .32);
+      transform: translateY(-4px);
+    }
+
+    .reason-number {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 18px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 14px;
+      color: var(--gold);
+      background: rgba(255, 255, 255, .07);
+      font-weight: 800;
+    }
+
+    .reason-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.28;
+    }
+
+    .reason-card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .testimonials {
+      display: grid;
+      gap: 12px;
+    }
+
+    .testimonial {
+      padding: 19px;
+      border-radius: 24px;
+      transform: translateY(22px);
+      opacity: 0;
+      transition: transform .8s var(--ease), opacity .7s ease;
+    }
+
+    .testimonial.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .testimonial-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--pink-soft);
+      font-size: .75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .avatar {
+      display: grid;
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .17);
+      border-radius: 50%;
+      color: #240e17;
+      background: linear-gradient(135deg, var(--pink-soft), var(--gold));
+      font-weight: 900;
+    }
+
+    .testimonial blockquote {
+      margin: 16px 0 0;
+      color: white;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1.15rem, 5.2vw, 1.7rem);
+      line-height: 1.25;
+    }
+
+    .comments-layout {
+      display: grid;
+      gap: 18px;
+    }
+
+    .comment-form {
+      padding: 19px;
+      border-radius: 26px;
+    }
+
+    .comment-form h3 {
+      margin: 0 0 4px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.55rem;
+    }
+
+    .comment-form > p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 13px;
+    }
+
+    .field label {
+      color: #f3e6ec;
+      font-size: .79rem;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      min-height: 52px;
+      padding: 13px 14px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 15px;
+      outline: none;
+      color: white;
+      background: rgba(8, 4, 8, .28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .field textarea {
+      min-height: 122px;
+      resize: vertical;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #9f8e99;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(255, 173, 196, .65);
+      background: rgba(8, 4, 8, .4);
+      box-shadow: 0 0 0 4px rgba(255, 113, 155, .1);
+    }
+
+    .comment-stream {
+      min-width: 0;
+    }
+
+    .comments-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .comments-toolbar h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .comments-count-label {
+      color: var(--muted);
+      font-size: .76rem;
+    }
+
+    .comment-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .comment-card {
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid var(--stroke-soft);
+      border-radius: 20px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .095), rgba(255, 255, 255, .035)),
+        rgba(255, 255, 255, .025);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .09),
+        0 14px 34px rgba(0, 0, 0, .17);
+      animation: comment-in .65s var(--ease) both;
+    }
+
+    .comment-head {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .comment-author {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--pink-soft);
+      font-size: .8rem;
+      font-weight: 800;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .comment-time {
+      flex: 0 0 auto;
+      color: #9e8c98;
+      font-size: .68rem;
+    }
+
+    .comment-card p {
+      margin: 9px 0 0;
+      overflow-wrap: anywhere;
+      color: #f3e8ed;
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+
+    .load-more {
+      width: 100%;
+      margin-top: 13px;
+    }
+
+    .final-call {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .final-call::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 115, 158, .28), transparent 34%),
+        radial-gradient(circle at 50% 65%, rgba(255, 212, 135, .13), transparent 31%);
+      animation: final-glow 7s ease-in-out infinite alternate;
+    }
+
+    .final-card {
+      position: relative;
+      padding: 30px 19px;
+      border-radius: 31px;
+      text-align: center;
+    }
+
+    .final-card h2 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2.35rem, 10vw, 6.5rem);
+      line-height: .95;
+      letter-spacing: -.05em;
+      text-wrap: balance;
+    }
+
+    .final-card p {
+      margin: 17px 0 0;
+      color: var(--pink-soft);
+      font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .final-card .btn {
+      width: 100%;
+      margin-top: 23px;
+    }
+
+    footer {
+      padding: 34px 0 calc(34px + var(--safe-bottom));
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      text-align: center;
+    }
+
+    footer p {
+      margin: 5px 0;
+      color: var(--muted);
+      font-size: .79rem;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 2000;
+      inset: 0;
+      display: grid;
+      padding:
+        max(14px, var(--safe-top))
+        14px
+        max(14px, var(--safe-bottom));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      place-items: center;
+      background: rgba(8, 4, 9, .64);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      width: min(100%, 520px);
+      max-height: calc(100dvh - 28px - var(--safe-top) - var(--safe-bottom));
+      padding: 19px;
+      overflow-y: auto;
+      border-radius: 28px;
+      transform: translateY(22px) scale(.94);
+      opacity: 0;
+      transition: transform .5s var(--ease), opacity .35s ease;
+    }
+
+    .modal-backdrop.open .modal {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1.8rem, 8vw, 2.7rem);
+      line-height: 1;
+    }
+
+    .modal-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .close-modal {
+      display: grid;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 14px;
+      color: white;
+      background: rgba(255, 255, 255, .07);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: grid;
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .toast-region {
+      position: fixed;
+      z-index: 3000;
+      right: 12px;
+      bottom: calc(12px + var(--safe-bottom));
+      left: 12px;
+      display: grid;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      width: min(100%, 390px);
+      margin-left: auto;
+      padding: 13px 15px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 17px;
+      color: white;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .07)),
+        rgba(26, 12, 24, .82);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .17),
+        0 20px 48px rgba(0, 0, 0, .4);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      font-size: .82rem;
+      font-weight: 700;
+      animation: toast-in .55s var(--ease) both;
+    }
+
+    .toast.out {
+      animation: toast-out .4s var(--ease) forwards;
+    }
+
+    @keyframes ambient-drift {
+      to { transform: translate3d(4%, -3%, 0) rotate(5deg); }
+    }
+
+    @keyframes float-orb {
+      50% { transform: translate3d(22px, -25px, 0) scale(1.08); }
+    }
+
+    @keyframes particle-float {
+      to { transform: translate3d(10px, -28px, 0); opacity: .1; }
+    }
+
+    @keyframes pulse {
+      70% { box-shadow: 0 0 0 10px rgba(255, 113, 155, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 113, 155, 0); }
+    }
+
+    @keyframes equalize {
+      to { height: 100%; }
+    }
+
+    @keyframes progress-shine {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    @keyframes activity-in {
+      from { opacity: 0; transform: translateY(-10px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes comment-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(16px) scale(.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes toast-out {
+      to { opacity: 0; transform: translateY(12px) scale(.97); }
+    }
+
+    @keyframes final-glow {
+      to { transform: scale(1.08); opacity: .78; }
+    }
+
+    @media (min-width: 420px) {
+      .shell {
+        width: min(100% - 36px, 1160px);
+      }
+
+      .hero-copy,
+      .petition-card,
+      .final-card {
+        padding: 24px;
+      }
+
+      .hero-actions,
+      .petition-action,
+      .modal-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .final-card .btn {
+        width: auto;
+      }
+    }
+
+    @media (min-width: 700px) {
+      .site-header {
+        width: min(calc(100% - 32px), 1160px);
+      }
+
+      .header-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        min-height: 76px;
+        padding: 11px 13px 11px 20px;
+      }
+
+      .brand-title {
+        font-size: .98rem;
+        -webkit-line-clamp: 1;
+      }
+
+      .brand-alert {
+        display: inline-block;
+        margin-left: 8px;
+      }
+
+      .volume-wrap {
+        display: flex;
+      }
+
+      .audio-control {
+        width: 142px;
+      }
+
+      .header-sign {
+        display: inline-flex;
+      }
+
+      .hero {
+        padding-top: calc(124px + var(--safe-top));
+      }
+
+      .hero-copy {
+        padding: 32px;
+      }
+
+      .section {
+        padding: 94px 0;
+      }
+
+      .petition-card {
+        padding: 32px;
+      }
+
+      .reasons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .testimonials {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .testimonial.wide {
+        grid-column: span 2;
+      }
+
+      .comment-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .modal {
+        padding: 26px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .hero {
+        min-height: 860px;
+      }
+
+      .hero-content {
+        padding-bottom: 40px;
+      }
+
+      .petition-grid {
+        grid-template-columns: minmax(0, 1.45fr) minmax(310px, .75fr);
+        align-items: start;
+      }
+
+      .reasons {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .reason-card:nth-child(2),
+      .reason-card:nth-child(5) {
+        transform: translateY(44px);
+      }
+
+      .reason-card:nth-child(2).visible,
+      .reason-card:nth-child(5).visible {
+        transform: translateY(20px);
+      }
+
+      .testimonials {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      .testimonial {
+        grid-column: span 4;
+      }
+
+      .testimonial.wide {
+        grid-column: span 8;
+      }
+
+      .testimonial.tall {
+        grid-row: span 2;
+      }
+
+      .comments-layout {
+        grid-template-columns: minmax(300px, .72fr) minmax(0, 1.28fr);
+        align-items: start;
+      }
+
+      .comment-form {
+        position: sticky;
+        top: 100px;
+      }
+
+      .final-card {
+        padding: 58px;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, .3),
+          0 20px 40px rgba(0, 0, 0, .32);
+      }
+
+      .btn-primary:hover {
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, .85),
+          0 22px 44px rgba(255, 81, 137, .36);
+      }
+    }
+
+    @media (orientation: landscape) and (max-height: 560px) {
+      .hero {
+        min-height: 620px;
+        padding-top: calc(92px + var(--safe-top));
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 7vw, 3.8rem);
+      }
+
+      .modal-backdrop {
+        place-items: start center;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .shell {
+        width: min(100% - 20px, 1160px);
+      }
+
+      .header-inner {
+        padding-left: 11px;
+      }
+
+      .brand-title {
+        font-size: .7rem;
+      }
+
+      .brand-subtitle {
+        font-size: .61rem;
+      }
+
+      .hero-copy,
+      .petition-card,
+      .comment-form,
+      .final-card {
+        padding: 16px;
+      }
+
+      .stat {
+        padding: 12px 9px;
+      }
+
+      .stat-value {
+        font-size: 1.13rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+
+      .reason-card,
+      .testimonial {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+    <div class="particles" id="particles"></div>
+  </div>
+
+  <audio id="ambientAudio" src="Ogg.mp3" loop preload="metadata"></audio>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner glass">
+      <div class="brand">
+        <p class="brand-title">Manuela, volte a vender bolos de pote</p>
+        <span class="brand-subtitle">
+          Uma petição pública pela volta dos bolos de pote.
+          <span class="brand-alert">O povo está sofrendo.</span>
+        </span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-primary btn-small header-sign" type="button" data-open-sign>
+          Assinar
+        </button>
+
+        <div class="audio-control" id="audioControl" aria-label="Controle da música ambiente">
+          <button
+            class="audio-toggle"
+            id="audioToggle"
+            type="button"
+            aria-label="Reproduzir música ambiente"
+            aria-pressed="false"
+          >
+            <span class="equalizer" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+          </button>
+
+          <div class="volume-wrap">
+            <input
+              class="volume"
+              id="volumeControl"
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="0.35"
+              aria-label="Volume da música ambiente"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <img id="heroImage" src="Imagem.jpg" alt="">
+      </div>
+
+      <div class="shell hero-content">
+        <div class="hero-copy glass">
+          <p class="eyebrow">
+            <span class="live-dot"></span>
+            Mobilização nacional em andamento
+          </p>
+
+          <h1 id="hero-title">
+            O povo quer os <span>bolos de pote</span> de volta
+          </h1>
+
+          <p class="hero-lead">Manuela, ouça a voz do povo.</p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" data-open-sign>
+              Assinar a petição
+            </button>
+            <a class="btn btn-secondary" href="#peticao">Ver a mobilização</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section petition-wrap" id="peticao">
+      <div class="shell">
+        <article class="petition-card glass">
+          <div class="petition-grid">
+            <div>
+              <p class="petition-label">Petição pública</p>
+              <h2>Um apelo oficialmente dramático</h2>
+
+              <p class="petition-quote">
+                "Nós, cidadãos e consumidores afetados pela ausência dos
+                lendários bolos de pote, viemos por meio desta petição solicitar
+                respeitosamente que Manuela considere voltar a vender seus bolos
+                de pote."
+              </p>
+
+              <p class="petition-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                  <path d="M12 3v18M3 12h18" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                Nenhum bolo pode ser comprado aqui. Este site é uma mobilização
+                fictícia, porém a saudade é absolutamente verdadeira.
+              </p>
+            </div>
+
+            <div>
+              <div class="stats-grid" aria-label="Estatísticas da petição">
+                <div class="stat">
+                  <strong class="stat-value" id="signatureCount">1.247</strong>
+                  <span class="stat-label">Assinaturas</span>
+                </div>
+
+                <div class="stat">
+                  <strong class="stat-value">2.000</strong>
+                  <span class="stat-label">Meta</span>
+                </div>
+
+                <div class="stat">
+                  <strong class="stat-value" id="commentCount">438</strong>
+                  <span class="stat-label">Comentários</span>
+                </div>
+
+                <div class="stat">
+                  <strong class="stat-value" id="supportCount">97%</strong>
+                  <span class="stat-label">De apoio</span>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-meta">
+                  <span>Progresso da mobilização</span>
+                  <strong id="progressLabel">62,4%</strong>
+                </div>
+
+                <div
+                  class="progress-track"
+                  role="progressbar"
+                  aria-label="Progresso até a meta de assinaturas"
+                  aria-valuemin="0"
+                  aria-valuemax="2000"
+                  aria-valuenow="1247"
+                  id="progressTrack"
+                >
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+              </div>
+
+              <div class="petition-action">
+                <button class="btn btn-primary" type="button" data-open-sign>
+                  Assinar a petição
+                </button>
+                <a class="btn btn-secondary" href="#comentarios">
+                  Ler os comentários
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">
+            <span class="live-dot"></span>
+            Acontecendo agora
+          </p>
+          <h2>A mobilização não para</h2>
+          <p>
+            Pessoas de todos os cantos da internet estão exigindo justiça,
+            esperança e, de preferência, uma colher.
+          </p>
+        </div>
+
+        <div class="activity-panel glass">
+          <div class="panel-head">
+            <h3>Atividade em tempo real</h3>
+            <span class="live-badge">
+              <span class="live-dot"></span>
+              Ao vivo
+            </span>
+          </div>
+
+          <div class="activity-list" id="activityList" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="motivos">
+      <div class="shell">
+        <div class="section-heading centered">
+          <p class="eyebrow">Argumentos irrefutáveis</p>
+          <h2>Por que ela deve voltar?</h2>
+          <p>
+            Após uma investigação rigorosa, o comitê popular chegou a estas
+            conclusões extremamente sérias.
+          </p>
+        </div>
+
+        <div class="reasons">
+          <article class="reason-card glass reveal">
+            <span class="reason-number">01</span>
+            <h3>Porque estamos com saudade.</h3>
+            <p>A saudade já ultrapassou todos os limites recomendados.</p>
+          </article>
+
+          <article class="reason-card glass reveal">
+            <span class="reason-number">02</span>
+            <h3>Porque o povo está sofrendo.</h3>
+            <p>Há relatos de pessoas olhando para potes vazios em silêncio.</p>
+          </article>
+
+          <article class="reason-card glass reveal">
+            <span class="reason-number">03</span>
+            <h3>Porque bolo de pote é importante.</h3>
+            <p>Não é apenas sobremesa. É infraestrutura emocional.</p>
+          </article>
+
+          <article class="reason-card glass reveal">
+            <span class="reason-number">04</span>
+            <h3>Porque ninguém deveria passar por isso.</h3>
+            <p>Uma sociedade justa precisa enfrentar seus grandes desafios.</p>
+          </article>
+
+          <article class="reason-card glass reveal">
+            <span class="reason-number">05</span>
+            <h3>Porque Manuela precisa ouvir o povo.</h3>
+            <p>E o povo está falando muito alto, com colher na mão.</p>
+          </article>
+
+          <article class="reason-card glass reveal">
+            <span class="reason-number">06</span>
+            <h3>Porque os potes continuam esperando.</h3>
+            <p>Eles foram feitos para algo maior do que guardar parafusos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">Relatos da população</p>
+          <h2>O povo tem algo a dizer</h2>
+        </div>
+
+        <div class="testimonials">
+          <article class="testimonial glass wide reveal">
+            <div class="testimonial-user">
+              <span class="avatar">P</span>
+              Pinguelos User
+            </div>
+            <blockquote>
+              "Eu não sei o que está acontecendo, mas sei que precisamos dos
+              bolos de pote de volta."
+            </blockquote>
+          </article>
+
+          <article class="testimonial glass reveal">
+            <div class="testimonial-user">
+              <span class="avatar">P</span>
+              Pinguelos User
+            </div>
+            <blockquote>
+              "Isso já deixou de ser apenas uma questão de sobremesa."
+            </blockquote>
+          </article>
+
+          <article class="testimonial glass reveal">
+            <div class="testimonial-user">
+              <span class="avatar">P</span>
+              Pinguelos User
+            </div>
+            <blockquote>
+              "Estamos entrando em um período muito difícil."
+            </blockquote>
+          </article>
+
+          <article class="testimonial glass wide reveal">
+            <div class="testimonial-user">
+              <span class="avatar">P</span>
+              Pinguelos User
+            </div>
+            <blockquote>
+              "Manuela, o povo está unido. Até pessoas que nunca concordaram
+              sobre nada agora concordam sobre o bolo de pote."
+            </blockquote>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="comentarios">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">Tribuna popular</p>
+          <h2>Comentários da mobilização</h2>
+          <p>
+            Um registro histórico da maior crise confeiteira enfrentada por esta
+            população.
+          </p>
+        </div>
+
+        <div class="comments-layout">
+          <form class="comment-form glass" id="commentForm">
+            <h3>Deixe seu depoimento</h3>
+            <p>Use este espaço com responsabilidade e uma dose adequada de drama.</p>
+
+            <div class="field">
+              <label for="commentName">Nome</label>
+              <input
+                id="commentName"
+                name="name"
+                type="text"
+                maxlength="60"
+                autocomplete="name"
+                placeholder="Ex.: Pinguelos User"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="commentText">Comentário</label>
+              <textarea
+                id="commentText"
+                name="comment"
+                maxlength="500"
+                placeholder="Conte como a ausência dos bolos de pote afetou a nação..."
+                required
+              ></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="submit">
+              Publicar comentário
+            </button>
+          </form>
+
+          <div class="comment-stream">
+            <div class="comments-toolbar">
+              <h3>Vozes do povo</h3>
+              <span class="comments-count-label">
+                <span id="visibleCommentCount">0</span> relatos exibidos
+              </span>
+            </div>
+
+            <div class="comment-list" id="commentList" aria-live="polite"></div>
+
+            <button class="btn btn-secondary load-more" id="loadMore" type="button">
+              Mostrar mais comentários
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-call">
+      <div class="shell">
+        <div class="final-card glass">
+          <p class="eyebrow">Último apelo da população</p>
+          <h2>Manuela, volte a vender bolos de pote.</h2>
+          <p>O povo está sofrendo.</p>
+          <button class="btn btn-primary" type="button" data-open-sign>
+            Assinar a petição
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <p><strong>Esta petição é uma brincadeira.</strong></p>
+      <p>Feita pelo povo que sente falta dos bolos de pote.</p>
+      <p>Nenhuma venda é realizada neste site.</p>
+      <p>Manuela, a decisão está em suas mãos.</p>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="signModal" aria-hidden="true">
+    <div
+      class="modal glass"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+      aria-describedby="modalDescription"
+    >
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle">Assine a petição</h2>
+          <p id="modalDescription">
+            Sua assinatura fortalece esta mobilização completamente fictícia.
+          </p>
+        </div>
+
+        <button class="close-modal" type="button" data-close-sign aria-label="Fechar">
+          &times;
+        </button>
+      </div>
+
+      <form id="signForm">
+        <div class="field">
+          <label for="signName">Seu nome</label>
+          <input
+            id="signName"
+            name="name"
+            type="text"
+            maxlength="60"
+            autocomplete="name"
+            placeholder="Digite seu nome"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="signReason">Por que você quer a volta dos bolos de pote?</label>
+          <textarea
+            id="signReason"
+            name="reason"
+            maxlength="500"
+            placeholder="Explique a gravidade da situação..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">Assinar</button>
+          <button class="btn btn-secondary" type="button" data-close-sign>
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="toast-region"
+    id="toastRegion"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE = {
+        signatures: "manuela_petition_signatures_v1",
+        comments: "manuela_petition_comments_v1",
+        audio: "manuela_petition_audio_v1"
+      };
+
+      const BASE_SIGNATURES = 1247;
+      const BASE_COMMENTS = 438;
+      const GOAL = 2000;
+
+      const fallbackComments = [
+        "Manuela, estamos sofrendo sem seus bolos de pote.",
+        "Eu só queria um bolo de pote novamente.",
+        "Manuela, por favor. O povo está sofrendo.",
+        "Não sei quanto tempo mais vamos conseguir ficar sem bolo de pote.",
+        "Minha vida mudou desde que os bolos de pote acabaram.",
+        "Estou aqui representando todos que estão sofrendo.",
+        "Manuela, considere voltar. Estamos implorando.",
+        "Já faz tempo demais. Precisamos dos bolos de pote.",
+        "Eu não pedi para nascer em uma época sem bolo de pote da Manuela.",
+        "A situação está ficando insustentável.",
+        "A cidade acorda, trabalha e dorme, mas algo continua faltando: o bolo de pote.",
+        "Não quero causar pânico, mas meu último pote está vazio.",
+        "Os livros de história vão chamar este período de A Grande Ausência.",
+        "Eu tentei seguir em frente. Não consegui.",
+        "Minha colher perdeu completamente o propósito.",
+        "Isso não é fome. É saudade com cobertura.",
+        "Precisamos formar uma comissão parlamentar do bolo de pote.",
+        "Onde estávamos quando o último bolo de pote foi vendido?",
+        "O país precisa de respostas e de brigadeiro.",
+        "Não podemos normalizar potes sem bolo.",
+        "A ausência desse bolo abalou minha confiança nas instituições.",
+        "Todo dia eu abro a geladeira esperando um milagre.",
+        "Manuela, ainda há tempo para evitar uma crise maior.",
+        "O silêncio dos potes vazios é ensurdecedor.",
+        "Minha família pergunta quando essa situação será resolvida.",
+        "Estou tentando ser forte, mas vi uma colher e chorei.",
+        "A economia pode esperar. O bolo de pote não.",
+        "Este é um pedido humilde de uma população emocionalmente faminta.",
+        "Já organizei uma vigília em frente à geladeira.",
+        "Não haverá paz enquanto não houver bolo.",
+        "Precisamos de união, coragem e duas camadas de recheio.",
+        "Manuela, o futuro da sobremesa está em suas mãos.",
+        "O povo não aguenta mais viver de lembranças.",
+        "Meu aniversário passou e eu permaneci em silêncio.",
+        "A esperança tem nome, tampa e recheio.",
+        "O último pote que comi ainda vive na minha memória.",
+        "É uma questão de dignidade nacional.",
+        "Meus domingos nunca mais foram os mesmos.",
+        "Venho por meio deste comentário declarar estado de saudade.",
+        "Cada dia sem bolo é uma página triste da nossa história.",
+        "Não estamos pedindo luxo. Estamos pedindo justiça confeiteira.",
+        "Fui ao mercado e nenhum bolo parecia certo.",
+        "A colher está pronta. Falta apenas Manuela tomar a decisão correta.",
+        "Estamos diante de uma emergência açucarada sem precedentes.",
+        "Meu apoio é total, irrestrito e com granulado.",
+        "As próximas gerações merecem conhecer esse patrimônio.",
+        "Tentei explicar a situação ao meu cachorro. Até ele ficou preocupado.",
+        "O povo está unido por uma causa maior do que todos nós.",
+        "Há crianças crescendo sem conhecer a lenda. Isso precisa mudar.",
+        "Nunca pensei que viveria para ver tamanha escassez.",
+        "Não quero pressionar, mas a nação observa.",
+        "Manuela, escute este humilde clamor coberto de chocolate.",
+        "Eu estava bem até lembrar do recheio.",
+        "Minha produtividade caiu 97% desde o fim dos bolos.",
+        "Considero este comentário um documento histórico.",
+        "Precisamos recuperar a alegria, pote por pote.",
+        "As ruas estão calmas, mas os corações estão em protesto.",
+        "Hoje somos comentários. Amanhã seremos uma fila com colheres.",
+        "O retorno do bolo pode reconciliar famílias inteiras.",
+        "Essa mobilização é o último fio de esperança que nos resta."
+      ];
+
+      const activityMessages = [
+        "Nova assinatura recebida.",
+        "Mais uma pessoa está apoiando.",
+        "Pinguelos User acabou de assinar.",
+        "Novo comentário recebido.",
+        "Alguém acabou de apoiar a petição.",
+        "Pinguelos User deixou um comentário.",
+        "Nova pessoa entrou na mobilização.",
+        "Uma colher acaba de recuperar a esperança.",
+        "Mais um pote vazio aderiu simbolicamente ao movimento.",
+        "O apoio popular continua crescendo.",
+        "Uma família inteira declarou apoio à causa.",
+        "Novo relato de saudade foi registrado."
+      ];
+
+      const selectors = {
+        signatureCount: document.getElementById("signatureCount"),
+        commentCount: document.getElementById("commentCount"),
+        supportCount: document.getElementById("supportCount"),
+        progressFill: document.getElementById("progressFill"),
+        progressLabel: document.getElementById("progressLabel"),
+        progressTrack: document.getElementById("progressTrack"),
+        activityList: document.getElementById("activityList"),
+        commentList: document.getElementById("commentList"),
+        visibleCommentCount: document.getElementById("visibleCommentCount"),
+        loadMore: document.getElementById("loadMore"),
+        signModal: document.getElementById("signModal"),
+        signForm: document.getElementById("signForm"),
+        signName: document.getElementById("signName"),
+        commentForm: document.getElementById("commentForm"),
+        toastRegion: document.getElementById("toastRegion"),
+        audio: document.getElementById("ambientAudio"),
+        audioControl: document.getElementById("audioControl"),
+        audioToggle: document.getElementById("audioToggle"),
+        volumeControl: document.getElementById("volumeControl"),
+        siteHeader: document.getElementById("siteHeader"),
+        heroImage: document.getElementById("heroImage")
+      };
+
+      const state = {
+        signatures: loadJSON(STORAGE.signatures, []),
+        userComments: loadJSON(STORAGE.comments, []),
+        visibleFallback: 6,
+        lastFocused: null,
+        audioStarted: false,
+        audioPreference: loadJSON(STORAGE.audio, {
+          playing: true,
+          volume: 0.35
+        })
+      };
+
+      function loadJSON(key, fallback) {
+        try {
+          const value = localStorage.getItem(key);
+          return value ? JSON.parse(value) : fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function saveJSON(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {
+          // A interface continua funcional mesmo se o armazenamento estiver indisponível.
+        }
+      }
+
+      function escapeHTML(value) {
+        const node = document.createElement("div");
+        node.textContent = String(value);
+        return node.innerHTML;
+      }
+
+      function formatNumber(value) {
+        return new Intl.NumberFormat("pt-BR").format(value);
+      }
+
+      function totalSignatures() {
+        return BASE_SIGNATURES + state.signatures.length;
+      }
+
+      function totalComments() {
+        return BASE_COMMENTS + state.userComments.length;
+      }
+
+      function supportPercentage() {
+        const gained = Math.min(state.signatures.length, 180);
+        return Math.min(99, 97 + Math.floor(gained / 90));
+      }
+
+      function animateNumber(element, from, to, formatter = formatNumber) {
+        if (!element) return;
+
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduced || from === to) {
+          element.textContent = formatter(to);
+          return;
+        }
+
+        const duration = 850;
+        const startedAt = performance.now();
+
+        function frame(now) {
+          const elapsed = Math.min(1, (now - startedAt) / duration);
+          const eased = 1 - Math.pow(1 - elapsed, 4);
+          const value = Math.round(from + (to - from) * eased);
+          element.textContent = formatter(value);
+
+          if (elapsed < 1) requestAnimationFrame(frame);
+        }
+
+        requestAnimationFrame(frame);
+      }
+
+      function updateStats(previousSignatures = null, previousComments = null) {
+        const signatures = totalSignatures();
+        const comments = totalComments();
+        const percent = Math.min(100, (signatures / GOAL) * 100);
+
+        if (previousSignatures === null) {
+          selectors.signatureCount.textContent = formatNumber(signatures);
+        } else {
+          animateNumber(selectors.signatureCount, previousSignatures, signatures);
+        }
+
+        if (previousComments === null) {
+          selectors.commentCount.textContent = formatNumber(comments);
+        } else {
+          animateNumber(selectors.commentCount, previousComments, comments);
+        }
+
+        selectors.supportCount.textContent = supportPercentage() + "%";
+        selectors.progressLabel.textContent =
+          percent.toLocaleString("pt-BR", {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+          }) + "%";
+
+        selectors.progressTrack.setAttribute("aria-valuenow", String(signatures));
+
+        requestAnimationFrame(() => {
+          selectors.progressFill.style.width = percent + "%";
+        });
+      }
+
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        selectors.toastRegion.appendChild(toast);
+
+        window.setTimeout(() => toast.classList.add("out"), 3600);
+        window.setTimeout(() => toast.remove(), 4100);
+      }
+
+      function addActivity(message, timeText = "agora") {
+        const item = document.createElement("div");
+        item.className = "activity-item";
+        item.innerHTML = `
+          <span class="activity-icon" aria-hidden="true">+</span>
+          <div>
+            <p>${escapeHTML(message)}</p>
+            <time>${escapeHTML(timeText)}</time>
+          </div>
+        `;
+
+        selectors.activityList.prepend(item);
+
+        while (selectors.activityList.children.length > 9) {
+          selectors.activityList.lastElementChild.remove();
+        }
+      }
+
+      function scheduleActivity() {
+        const delay = 4800 + Math.random() * 8500;
+
+        window.setTimeout(() => {
+          const message =
+            activityMessages[Math.floor(Math.random() * activityMessages.length)];
+
+          addActivity(message);
+
+          if (Math.random() > 0.62) {
+            showToast(message);
+          }
+
+          scheduleActivity();
+        }, delay);
+      }
+
+      function renderComments() {
+        selectors.commentList.innerHTML = "";
+
+        const custom = [...state.userComments].reverse();
+        const simulated = fallbackComments
+          .slice(0, state.visibleFallback)
+          .map((text, index) => ({
+            name: "Pinguelos User",
+            text,
+            createdAt: Date.now() - (index + 1) * 78000
+          }));
+
+        const comments = [...custom, ...simulated];
+
+        comments.forEach((comment, index) => {
+          const card = document.createElement("article");
+          card.className = "comment-card";
+          card.style.animationDelay = Math.min(index * 45, 360) + "ms";
+
+          const timeLabel =
+            index < custom.length
+              ? "publicado agora"
+              : index < custom.length + 2
+                ? "há poucos minutos"
+                : "recentemente";
+
+          card.innerHTML = `
+            <div class="comment-head">
+              <strong class="comment-author">${escapeHTML(comment.name)}</strong>
+              <time class="comment-time">${timeLabel}</time>
+            </div>
+            <p>${escapeHTML(comment.text)}</p>
+          `;
+
+          selectors.commentList.appendChild(card);
+        });
+
+        selectors.visibleCommentCount.textContent = formatNumber(comments.length);
+        selectors.loadMore.hidden = state.visibleFallback >= fallbackComments.length;
+      }
+
+      function openModal() {
+        state.lastFocused = document.activeElement;
+        selectors.signModal.classList.add("open");
+        selectors.signModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+
+        window.setTimeout(() => selectors.signName.focus(), 180);
+      }
+
+      function closeModal() {
+        selectors.signModal.classList.remove("open");
+        selectors.signModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+
+        if (state.lastFocused && typeof state.lastFocused.focus === "function") {
+          state.lastFocused.focus();
+        }
+      }
+
+      function trapModalFocus(event) {
+        if (event.key !== "Tab" || !selectors.signModal.classList.contains("open")) {
+          return;
+        }
+
+        const focusable = [
+          ...selectors.signModal.querySelectorAll(
+            'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [href]'
+          )
+        ];
+
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+
+      function initializeAudio() {
+        const pref = state.audioPreference;
+        selectors.audio.volume = Number.isFinite(Number(pref.volume))
+          ? Math.max(0, Math.min(1, Number(pref.volume)))
+          : 0.35;
+
+        selectors.volumeControl.value = String(selectors.audio.volume);
+        updateAudioUI(false);
+      }
+
+      function updateAudioUI(isPlaying) {
+        selectors.audioControl.classList.toggle("playing", isPlaying);
+        selectors.audioToggle.setAttribute("aria-pressed", String(isPlaying));
+        selectors.audioToggle.setAttribute(
+          "aria-label",
+          isPlaying ? "Pausar música ambiente" : "Reproduzir música ambiente"
+        );
+      }
+
+      async function playAudio() {
+        try {
+          await selectors.audio.play();
+          state.audioStarted = true;
+          state.audioPreference.playing = true;
+          state.audioPreference.volume = selectors.audio.volume;
+          saveJSON(STORAGE.audio, state.audioPreference);
+          updateAudioUI(true);
+        } catch {
+          updateAudioUI(false);
+        }
+      }
+
+      function pauseAudio() {
+        selectors.audio.pause();
+        state.audioPreference.playing = false;
+        state.audioPreference.volume = selectors.audio.volume;
+        saveJSON(STORAGE.audio, state.audioPreference);
+        updateAudioUI(false);
+      }
+
+      function firstInteractionAudio() {
+        if (!state.audioStarted && state.audioPreference.playing) {
+          playAudio();
+        }
+      }
+
+      function createParticles() {
+        const amount = window.innerWidth < 600 ? 12 : 20;
+        const fragment = document.createDocumentFragment();
+
+        for (let index = 0; index < amount; index++) {
+          const particle = document.createElement("span");
+          particle.className = "particle";
+          particle.style.setProperty("--size", 2 + Math.random() * 3 + "px");
+          particle.style.setProperty("--left", Math.random() * 100 + "%");
+          particle.style.setProperty("--top", Math.random() * 100 + "%");
+          particle.style.setProperty("--opacity", 0.12 + Math.random() * 0.35);
+          particle.style.setProperty("--duration", 5 + Math.random() * 9 + "s");
+          particle.style.setProperty("--delay", -Math.random() * 8 + "s");
+          fragment.appendChild(particle);
+        }
+
+        document.getElementById("particles").appendChild(fragment);
+      }
+
+      function initializeRevealAnimations() {
+        const elements = document.querySelectorAll(".reveal");
+
+        if (
+          !("IntersectionObserver" in window) ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          elements.forEach(element => element.classList.add("visible"));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.12,
+            rootMargin: "0px 0px -35px"
+          }
+        );
+
+        elements.forEach((element, index) => {
+          element.style.transitionDelay = Math.min(index % 6, 5) * 70 + "ms";
+          observer.observe(element);
+        });
+      }
+
+      function initializeHeaderAndParallax() {
+        let lastScroll = window.scrollY;
+        let ticking = false;
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        function update() {
+          const current = Math.max(0, window.scrollY);
+          const direction = current > lastScroll ? "down" : "up";
+
+          selectors.siteHeader.classList.toggle("compact", current > 45);
+
+          if (current > 260 && direction === "down" && current - lastScroll > 2) {
+            selectors.siteHeader.classList.add("hidden");
+          } else if (direction === "up" || current < 260) {
+            selectors.siteHeader.classList.remove("hidden");
+          }
+
+          if (!reduceMotion && selectors.heroImage) {
+            const offset = Math.min(current * 0.08, 42);
+            selectors.heroImage.style.transform =
+              `scale(1.06) translate3d(0, ${offset}px, 0)`;
+          }
+
+          lastScroll = current;
+          ticking = false;
+        }
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              requestAnimationFrame(update);
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
+      }
+
+      document.querySelectorAll("[data-open-sign]").forEach(button => {
+        button.addEventListener("click", openModal);
+      });
+
+      document.querySelectorAll("[data-close-sign]").forEach(button => {
+        button.addEventListener("click", closeModal);
+      });
+
+      selectors.signModal.addEventListener("click", event => {
+        if (event.target === selectors.signModal) closeModal();
+      });
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && selectors.signModal.classList.contains("open")) {
+          closeModal();
+        }
+        trapModalFocus(event);
+      });
+
+      selectors.signForm.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const formData = new FormData(selectors.signForm);
+        const name = String(formData.get("name") || "").trim();
+        const reason = String(formData.get("reason") || "").trim();
+
+        if (!name || !reason) return;
+
+        const previous = totalSignatures();
+
+        state.signatures.push({
+          name,
+          reason,
+          createdAt: Date.now()
+        });
+
+        saveJSON(STORAGE.signatures, state.signatures);
+        updateStats(previous, null);
+        addActivity(`${name} acabou de assinar.`);
+        showToast("Nova assinatura recebida.");
+        selectors.signForm.reset();
+        closeModal();
+      });
+
+      selectors.commentForm.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const formData = new FormData(selectors.commentForm);
+        const name = String(formData.get("name") || "").trim();
+        const text = String(formData.get("comment") || "").trim();
+
+        if (!name || !text) return;
+
+        const previous = totalComments();
+
+        state.userComments.push({
+          name,
+          text,
+          createdAt: Date.now()
+        });
+
+        saveJSON(STORAGE.comments, state.userComments);
+        selectors.commentForm.reset();
+        renderComments();
+        updateStats(null, previous);
+        addActivity(`${name} deixou um comentário.`);
+        showToast("Novo comentário recebido.");
+      });
+
+      selectors.loadMore.addEventListener("click", () => {
+        state.visibleFallback = Math.min(
+          fallbackComments.length,
+          state.visibleFallback + 6
+        );
+        renderComments();
+      });
+
+      selectors.audioToggle.addEventListener("click", () => {
+        if (selectors.audio.paused) {
+          playAudio();
+        } else {
+          pauseAudio();
+        }
+      });
+
+      selectors.volumeControl.addEventListener("input", event => {
+        selectors.audio.volume = Number(event.target.value);
+        state.audioPreference.volume = selectors.audio.volume;
+        saveJSON(STORAGE.audio, state.audioPreference);
+      });
+
+      selectors.audio.addEventListener("play", () => updateAudioUI(true));
+      selectors.audio.addEventListener("pause", () => updateAudioUI(false));
+
+      ["pointerdown", "keydown", "touchstart"].forEach(eventName => {
+        document.addEventListener(eventName, firstInteractionAudio, {
+          once: true,
+          passive: true
+        });
+      });
+
+      createParticles();
+      initializeAudio();
+      updateStats();
+      renderComments();
+      initializeRevealAnimations();
+      initializeHeaderAndParallax();
+
+      [
+        "Nova assinatura recebida.",
+        "Pinguelos User deixou um comentário.",
+        "Mais uma pessoa está apoiando."
+      ].forEach((message, index) => {
+        window.setTimeout(
+          () => addActivity(message, index === 0 ? "agora" : `há ${index + 1} min`),
+          300 + index * 380
+        );
+      });
+
+      scheduleActivity();
+    })();
+  </script>
+</body>
+</html>
