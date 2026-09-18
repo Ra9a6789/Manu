@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Manuela Voltou a Vender Bolos de Pote — Petição Vitoriosa</title>
+<style>
+  /* ============================================================
+     TOKENS
+     ============================================================ */
+  :root{
+    --paper: #F8F4EC;
+    --paper-2: #F0E9D8;
+    --ink: #2B1D12;
+    --ink-soft: #5C4A38;
+    --caramel: #B07A22;
+    --cherry: #9C2B24;
+    --cherry-dark: #7A1F1B;
+    --live: #1F8A4C;
+    --line: #DED0B2;
+    --shadow-sm: 0 1px 3px rgba(43,29,18,.08), 0 1px 2px rgba(43,29,18,.06);
+    --shadow-md: 0 6px 18px rgba(43,29,18,.10), 0 2px 6px rgba(43,29,18,.08);
+    --shadow-lg: 0 20px 50px rgba(43,29,18,.18), 0 6px 16px rgba(43,29,18,.10);
+    --radius-xs: 12px;
+    --radius-sm: 18px;
+    --radius-md: 28px;
+    --radius-pill: 999px;
+    --ease: cubic-bezier(.22,1,.36,1);
+    --font-head: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    /* vidro líquido */
+    --glass-blur: blur(26px) saturate(180%);
+    --glass-blur-soft: blur(16px) saturate(160%);
+    --glass-fill: rgba(255,255,255,.5);
+    --glass-fill-strong: rgba(255,255,255,.68);
+    --glass-fill-dark: rgba(43,29,18,.5);
+    --glass-border: rgba(255,255,255,.65);
+    --glass-shadow: 0 8px 32px rgba(43,29,18,.16), inset 0 1px 0 rgba(255,255,255,.65), inset 0 0 0 1px rgba(255,255,255,.18);
+    --glass-shadow-dark: 0 8px 28px rgba(43,29,18,.22), inset 0 1px 0 rgba(255,255,255,.2);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; }
+  .bg-mesh{
+    position:fixed; inset:0; z-index:-1;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(232,182,120,.55), transparent 42%),
+      radial-gradient(circle at 88% 14%, rgba(156,43,36,.38), transparent 46%),
+      radial-gradient(circle at 82% 82%, rgba(240,214,168,.6), transparent 46%),
+      radial-gradient(circle at 14% 86%, rgba(176,122,34,.35), transparent 42%),
+      var(--paper);
+    pointer-events:none;
+  }
+  .wrap{ max-width:720px; margin:0 auto; padding:0 20px; }
+  button{ font-family:inherit; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  a{ -webkit-tap-highlight-color:transparent; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--caramel); outline-offset:2px;
+  }
+
+  /* ============================================================
+     BARRA DE PROGRESSO DE LEITURA (topo fixo)
+     ============================================================ */
+  .scroll-progress{
+    position:fixed; top:0; left:0; height:3px; width:100%;
+    transform-origin:left center; transform:scaleX(0);
+    background:linear-gradient(90deg, var(--caramel), var(--cherry));
+    box-shadow:0 0 6px rgba(156,43,36,.45);
+    z-index:90; will-change:transform;
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{
+    padding:52px 0 36px;
+    text-align:center;
+    animation:heroIn .7s var(--ease) both;
+  }
+  @keyframes heroIn{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:translateY(0); } }
+
+  .hero-top{
+    display:flex; align-items:center; justify-content:center;
+    gap:10px; flex-wrap:wrap; margin-bottom:18px;
+  }
+  .badge-urgent{
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(255,255,255,.4); color:var(--live);
+    -webkit-backdrop-filter:var(--glass-blur-soft); backdrop-filter:var(--glass-blur-soft);
+    border:1px solid var(--glass-border);
+    font-weight:700; font-size:.72rem; letter-spacing:.02em;
+    padding:5px 12px; border-radius:var(--radius-pill);
+  }
+  .badge-dot{ width:6px; height:6px; border-radius:50%; background:var(--live); flex-shrink:0; }
+  .protocol{ font-size:.76rem; color:var(--ink-soft); }
+
+  .title{
+    font-family:var(--font-head);
+    font-weight:700;
+    font-size:clamp(1.7rem, 7vw, 2.85rem);
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  .subtitle{ font-size:1.05rem; color:var(--ink-soft); margin:0 0 6px; }
+  .dramatic{
+    font-family:var(--font-head); font-style:italic;
+    color:var(--cherry-dark); font-size:1.08rem; margin:6px 0 0;
+  }
+
+  .hero-stats{ max-width:420px; margin:30px auto 0; }
+  .stats-row{ text-align:center; }
+  .big-number{
+    display:inline-block;
+    font-family:var(--font-head);
+    font-size:clamp(2.1rem, 9vw, 3.1rem);
+    color:var(--cherry);
+    font-weight:700;
+    transition:transform .3s var(--ease);
+  }
+  .big-number.bump{ transform:scale(1.05); }
+  .big-number-label{ display:block; color:var(--ink-soft); font-size:.95rem; margin-top:2px; }
+
+  .progress-track{
+    width:100%; height:10px; background:var(--line);
+    border-radius:var(--radius-pill); overflow:hidden; margin:18px 0 8px;
+  }
+  .progress-fill{
+    height:100%; width:100%;
+    transform-origin:left center; transform:scaleX(0);
+    background:linear-gradient(90deg, var(--caramel), var(--cherry));
+    border-radius:var(--radius-pill);
+    transition:transform .8s var(--ease);
+    will-change:transform;
+  }
+  .progress-meta{
+    display:flex; justify-content:space-between;
+    font-size:.78rem; color:var(--ink-soft);
+  }
+
+  .hero-actions{
+    display:flex; flex-direction:column; align-items:center;
+    gap:10px; margin-top:24px;
+  }
+  @media(min-width:480px){
+    .hero-actions{ flex-direction:row; justify-content:center; }
+  }
+
+  /* ============================================================
+     BOTÕES
+     ============================================================ */
+  .btn-primary{
+    position:relative; overflow:hidden;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(191,58,48,.92), rgba(122,31,27,.92));
+    -webkit-backdrop-filter:blur(14px) saturate(160%); backdrop-filter:blur(14px) saturate(160%);
+    color:#fff; font-weight:700;
+    border:1px solid rgba(255,255,255,.35); padding:14px 28px; border-radius:var(--radius-pill);
+    font-size:.98rem; cursor:pointer; white-space:nowrap;
+    box-shadow:0 8px 24px rgba(122,31,27,.35), inset 0 1px 0 rgba(255,255,255,.4);
+    transition:transform .2s var(--ease), box-shadow .2s var(--ease), opacity .2s ease;
+  }
+  .btn-primary::before{
+    content:''; position:absolute; inset:0; border-radius:inherit;
+    background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0) 55%);
+    pointer-events:none;
+  }
+  .btn-primary::after{
+    content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(115deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:skewX(-20deg); transition:left .6s var(--ease); pointer-events:none;
+  }
+  .btn-primary:hover::after{ left:130%; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(122,31,27,.4), inset 0 1px 0 rgba(255,255,255,.4); }
+  .btn-primary:active{ transform:translateY(0) scale(.97); }
+  .btn-primary:disabled{ opacity:.72; cursor:default; transform:none; }
+  .btn-primary.btn-lg{ padding:16px 34px; font-size:1.04rem; }
+
+  .btn-ghost{
+    display:inline-block; background:rgba(255,255,255,.35); color:var(--ink);
+    -webkit-backdrop-filter:var(--glass-blur-soft); backdrop-filter:var(--glass-blur-soft);
+    font-weight:600; border:1px solid var(--glass-border);
+    padding:12.5px 24px; border-radius:var(--radius-pill);
+    font-size:.92rem; cursor:pointer;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .2s var(--ease), background .2s ease, box-shadow .2s ease;
+  }
+  .btn-ghost:hover{ background:rgba(255,255,255,.5); }
+  .btn-ghost:active{ transform:scale(.97); }
+
+  .btn-text{
+    background:none; border:none; color:var(--ink-soft);
+    padding:10px 14px; cursor:pointer; font-size:.88rem;
+  }
+  .btn-text:hover{ color:var(--ink); }
+
+  .spinner{
+    width:13px; height:13px; margin-right:8px;
+    border:2px solid rgba(255,255,255,.4); border-top-color:#fff;
+    border-radius:50%; display:inline-block; vertical-align:-2px;
+    animation:spin .6s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* ============================================================
+     SOBRE A PETIÇÃO
+     ============================================================ */
+  .petition-card{
+    background:var(--glass-fill);
+    -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-md); padding:28px 22px;
+    box-shadow:var(--glass-shadow); margin:40px 0;
+  }
+  .petition-title{ font-family:var(--font-head); font-size:1.45rem; margin:0 0 12px; }
+  .petition-card > p{ color:var(--ink-soft); margin:0 0 4px; }
+
+  .petition-figure{ margin:22px 0 4px; }
+  .petition-figure img{
+    width:100%; display:block; border-radius:var(--radius-sm);
+    box-shadow:var(--shadow-sm); border:1px solid var(--line);
+  }
+  .petition-figure figcaption{
+    font-size:.82rem; color:var(--ink-soft); margin-top:8px; font-style:italic;
+  }
+  .petition-figure.img-missing img{ display:none; }
+  .petition-figure.img-missing::before{
+    content:"Imagem não encontrada — adicione \"Imagem.jpg\" nesta mesma pasta.";
+    display:block; padding:40px 16px; text-align:center;
+    border:1px dashed var(--line); border-radius:var(--radius-sm);
+    color:var(--ink-soft); font-size:.85rem;
+  }
+
+  .mini-stats{ display:grid; grid-template-columns:repeat(3,1fr); margin-top:26px; }
+  .mini-stat{ text-align:center; padding:0 6px; }
+  .mini-stat + .mini-stat{ border-left:1px solid rgba(255,255,255,.5); }
+  .mini-stat-value{ font-family:var(--font-head); font-size:1.2rem; font-weight:700; }
+  .mini-stat-label{ font-size:.72rem; color:var(--ink-soft); margin-top:2px; }
+
+  /* ============================================================
+     TÍTULOS DE SEÇÃO
+     ============================================================ */
+  .section-title-row{
+    display:flex; align-items:center; justify-content:center;
+    gap:10px; flex-wrap:wrap; margin:54px 0 22px;
+  }
+  .section-title{ font-family:var(--font-head); font-size:1.38rem; margin:0; text-align:center; }
+  .live-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:.7rem; font-weight:700; color:var(--live);
+    background:rgba(255,255,255,.4);
+    -webkit-backdrop-filter:var(--glass-blur-soft); backdrop-filter:var(--glass-blur-soft);
+    border:1px solid var(--glass-border);
+    padding:4px 10px; border-radius:var(--radius-pill);
+  }
+  .live-dot{ width:6px; height:6px; border-radius:50%; background:var(--live); animation:pulseDot 1.6s ease-in-out infinite; }
+  @keyframes pulseDot{ 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(.7); } }
+
+  /* ============================================================
+     MOTIVOS
+     ============================================================ */
+  .reasons-grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+  @media(min-width:640px){ .reasons-grid{ grid-template-columns:repeat(2,1fr); } }
+  .reason-card{
+    display:flex; align-items:flex-start; gap:14px;
+    background:var(--glass-fill);
+    -webkit-backdrop-filter:var(--glass-blur-soft); backdrop-filter:var(--glass-blur-soft);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-sm); padding:16px 18px;
+    box-shadow:var(--glass-shadow);
+    opacity:0; transform:translateY(10px);
+    transition:opacity .5s var(--ease), transform .3s var(--ease), box-shadow .3s ease;
+  }
+  .reason-card.visible{ opacity:1; transform:translateY(0); }
+  .reason-card:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(43,29,18,.16), inset 0 1px 0 rgba(255,255,255,.65); }
+  .reason-icon{
+    width:36px; height:36px; flex-shrink:0; border-radius:50%;
+    background:rgba(156,43,36,.09); color:var(--cherry);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .reason-icon svg{ width:18px; height:18px; }
+  .reason-text{ padding-top:7px; font-size:.94rem; color:var(--ink); }
+
+  /* ============================================================
+     COMENTÁRIOS
+     ============================================================ */
+  .comments-panel{
+    background:var(--glass-fill);
+    -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-md);
+    padding:6px 16px 16px;
+    box-shadow:var(--glass-shadow);
+  }
+  .comments-list{ display:flex; flex-direction:column; }
+  .comment-row{
+    display:flex; gap:12px; padding:14px 4px;
+    border-bottom:1px solid rgba(255,255,255,.45);
+    opacity:0; transform:translateY(8px);
+    animation:commentIn .45s var(--ease) forwards;
+  }
+  @keyframes commentIn{ to{ opacity:1; transform:translateY(0); } }
+  .comment-row.own{ background:rgba(176,122,34,.09); border-radius:var(--radius-sm); padding-left:10px; padding-right:10px; }
+  .comment-avatar{
+    width:34px; height:34px; flex-shrink:0; border-radius:50%;
+    background:var(--caramel); color:#fff; font-weight:700; font-size:.85rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .comment-body{ flex:1; min-width:0; }
+  .comment-name{ font-weight:700; font-size:.9rem; }
+  .comment-name .tag{ font-weight:400; color:var(--ink-soft); font-size:.76rem; margin-left:4px; }
+  .comment-text{ color:var(--ink-soft); font-size:.9rem; margin-top:2px; word-wrap:break-word; }
+
+  .comment-row.skeleton{ opacity:1; animation:none; }
+  .skeleton-block{ background:var(--line); animation:pulseSkeleton 1.4s ease-in-out infinite; }
+  .skeleton-line{ height:9px; background:var(--line); border-radius:4px; margin:6px 0; animation:pulseSkeleton 1.4s ease-in-out infinite; }
+  .skeleton-line.w35{ width:35%; }
+  .skeleton-line.w75{ width:75%; }
+  @keyframes pulseSkeleton{ 0%,100%{ opacity:.45; } 50%{ opacity:.9; } }
+
+  .loading-dots{ text-align:center; color:var(--ink-soft); font-size:.8rem; font-style:italic; margin-top:12px; }
+  .loading-dots span{ display:inline-block; animation:blink 1.4s infinite; }
+  .loading-dots span:nth-child(2){ animation-delay:.2s; }
+  .loading-dots span:nth-child(3){ animation-delay:.4s; }
+  @keyframes blink{ 0%,80%,100%{ opacity:.2; } 40%{ opacity:1; } }
+
+  /* ============================================================
+     DEPOIMENTOS
+     ============================================================ */
+  .testimonials{ display:flex; flex-direction:column; gap:14px; }
+  @media(min-width:640px){ .testimonials{ flex-direction:row; flex-wrap:wrap; } }
+  .testimonial{
+    flex:1 1 260px; margin:0; padding:20px 20px 18px;
+    background:var(--glass-fill);
+    -webkit-backdrop-filter:var(--glass-blur-soft); backdrop-filter:var(--glass-blur-soft);
+    border:1px solid var(--glass-border); border-radius:var(--radius-sm);
+    box-shadow:var(--glass-shadow);
+    font-family:var(--font-head); font-style:italic; font-size:1.01rem;
+  }
+  .testimonial::before{
+    content:'\201C'; display:block; font-family:var(--font-head); font-style:normal;
+    font-size:2.2rem; line-height:.6; color:var(--cherry); opacity:.4; margin-bottom:8px;
+  }
+  .testimonial cite{
+    display:block; margin-top:10px; font-family:var(--font-body);
+    font-style:normal; font-size:.8rem; color:var(--ink-soft);
+  }
+
+  /* ============================================================
+     TOASTS
+     ============================================================ */
+  .toast-container{
+    position:fixed; left:14px; bottom:84px; z-index:80;
+    max-width:250px; pointer-events:none;
+  }
+  .toast{
+    background:var(--glass-fill-dark); color:var(--paper); padding:10px 16px;
+    -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:var(--radius-pill); font-size:.8rem; box-shadow:var(--glass-shadow-dark);
+    opacity:0; transform:translateY(6px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .toast.show{ opacity:1; transform:translateY(0); }
+
+  /* ============================================================
+     WIDGET DE ÁUDIO (canto superior direito)
+     ============================================================ */
+  .audio-widget{
+    position:fixed; right:14px; top:calc(14px + env(safe-area-inset-top)); z-index:80;
+    background:var(--glass-fill);
+    -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-border); border-radius:var(--radius-pill);
+    box-shadow:var(--glass-shadow); display:flex; align-items:center; gap:8px;
+    padding:7px 11px 7px 7px;
+  }
+  .audio-toggle{
+    width:30px; height:30px; flex-shrink:0; border-radius:50%; border:none;
+    background:var(--cherry); color:#fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .audio-bars{ display:flex; align-items:flex-end; gap:2px; height:13px; }
+  .audio-bars span{ width:3px; background:var(--caramel); height:4px; border-radius:2px; }
+  .audio-widget.playing .audio-bars span{ animation:barpulse .9s ease-in-out infinite; }
+  .audio-bars span:nth-child(2){ animation-delay:.15s; }
+  .audio-bars span:nth-child(3){ animation-delay:.3s; }
+  @keyframes barpulse{ 0%,100%{ height:4px; } 50%{ height:13px; } }
+  .volume-slider{ width:54px; accent-color:var(--cherry); }
+
+  /* ============================================================
+     BARRA DE ASSINATURA FIXA (mobile-first, aparece ao rolar)
+     ============================================================ */
+  .sticky-cta{
+    position:fixed; left:14px; right:14px; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:75;
+    background:var(--glass-fill-strong);
+    -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-border);
+    border-radius:999px;
+    box-shadow:var(--glass-shadow);
+    padding:10px 10px 10px 20px; display:flex; align-items:center; gap:14px;
+    transform:translateY(100%);
+    transition:transform .4s var(--ease);
+    will-change:transform;
+  }
+  .sticky-cta.show{ transform:translateY(0); }
+  .sticky-cta-info{ flex:1; min-width:0; }
+  .sticky-cta-count{ font-weight:700; font-size:.85rem; }
+  .sticky-cta-bar{ height:4px; background:rgba(43,29,18,.12); border-radius:var(--radius-pill); margin-top:5px; overflow:hidden; }
+  .sticky-cta-bar-fill{ height:100%; width:100%; transform-origin:left center; transform:scaleX(0); background:var(--cherry); border-radius:var(--radius-pill); transition:transform .8s var(--ease); will-change:transform; }
+  .sticky-cta .btn-primary{ padding:10px 20px; font-size:.88rem; flex-shrink:0; }
+
+  /* ============================================================
+     MODAL
+     ============================================================ */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(43,29,18,.32);
+    -webkit-backdrop-filter:blur(8px) saturate(140%); backdrop-filter:blur(8px) saturate(140%);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px; z-index:100; opacity:0; pointer-events:none;
+    transition:opacity .3s var(--ease);
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .modal-card{
+    background:var(--glass-fill-strong);
+    -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-md);
+    padding:26px 22px; max-width:400px; width:100%;
+    box-shadow:var(--glass-shadow), var(--shadow-lg);
+    transform:translateY(12px) scale(.97);
+    transition:transform .3s var(--ease);
+  }
+  .modal-overlay.open .modal-card{ transform:translateY(0) scale(1); }
+  .modal-card h3{ font-family:var(--font-head); font-size:1.28rem; margin:0 0 18px; }
+  .modal-card label{ display:block; margin-bottom:14px; font-size:.82rem; color:var(--ink-soft); }
+  .modal-card input, .modal-card textarea{
+    width:100%; margin-top:6px; padding:12px 12px;
+    border:1px solid var(--glass-border); border-radius:var(--radius-xs);
+    font-family:var(--font-body); font-size:.94rem; background:rgba(255,255,255,.55); color:var(--ink);
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .modal-card input:focus, .modal-card textarea:focus{ border-color:var(--caramel); background:rgba(255,255,255,.8); }
+  .modal-card textarea{ min-height:78px; resize:vertical; }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:6px; }
+
+  .modal-success{ text-align:center; padding:6px 4px 4px; }
+  .modal-success p{ color:var(--ink-soft); font-size:.9rem; margin:4px 0 0; }
+  .check-icon{ width:52px; height:52px; margin:0 auto 12px; display:block; }
+  .check-circle{
+    stroke:var(--cherry); stroke-width:2; fill:none;
+    stroke-dasharray:151; stroke-dashoffset:151;
+    animation:circleDraw .5s var(--ease) forwards;
+  }
+  .check-mark{
+    stroke:var(--cherry); stroke-width:3; fill:none;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:36; stroke-dashoffset:36;
+    animation:markDraw .35s var(--ease) forwards .45s;
+  }
+  @keyframes circleDraw{ to{ stroke-dashoffset:0; } }
+  @keyframes markDraw{ to{ stroke-dashoffset:0; } }
+
+  /* ============================================================
+     RODAPÉ
+     ============================================================ */
+  footer{
+    text-align:center; padding:40px 20px 90px;
+    color:var(--ink-soft); font-size:.85rem;
+    border-top:1px solid var(--line); margin-top:56px;
+  }
+  footer p{ margin:4px 0; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <div class="audio-widget" id="audioWidget">
+    <button class="audio-toggle" id="audioToggle" type="button" aria-label="Tocar música">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="45" aria-label="Volume da música">
+  </div>
+  <audio id="bgAudio" src="Ogg.mp3" loop preload="none"></audio>
+
+  <div class="sticky-cta" id="stickyCta">
+    <div class="sticky-cta-info">
+      <div class="sticky-cta-count" id="stickyCount">2.481 comemorando</div>
+      <div class="sticky-cta-bar"><div class="sticky-cta-bar-fill" id="stickyBarFill"></div></div>
+    </div>
+    <button class="btn-primary" id="signBtnSticky" type="button">Agradecer</button>
+  </div>
+
+  <main class="wrap">
+
+    <!-- ===== Hero ===== -->
+    <header class="hero">
+      <div class="hero-top">
+        <span class="badge-urgent"><span class="badge-dot"></span>Vitória Confirmada</span>
+        <span class="protocol">Protocolo nº BP-2024/001 — Deferido</span>
+      </div>
+
+      <h1 class="title">MANUELA VOLTOU A VENDER<br>BOLOS DE POTE</h1>
+      <p class="subtitle">A petição que trouxe os bolos de pote de volta.</p>
+      <p class="dramatic">O povo pode finalmente comemorar.</p>
+
+      <div class="hero-stats">
+        <div class="stats-row">
+          <span class="big-number" id="signatureCount">2.481</span>
+          <span class="big-number-label">pessoas comemoraram essa vitória</span>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-meta">
+          <span id="progressRemaining">Meta superada! 🎉</span>
+          <span id="progressPercent">100%</span>
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn-primary btn-lg" id="signBtn" type="button">Deixar um Agradecimento</button>
+          <button class="btn-ghost" id="enterBtn" type="button">Ver como a gente conseguiu</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== Sobre a petição ===== -->
+    <section class="petition-card" id="sobreSection">
+      <h2 class="petition-title">Vitória do Povo</h2>
+      <p>Nós, cidadãos e consumidores que nos unimos por essa causa, comemoramos: Manuela ouviu o povo e os lendários bolos de pote estão de volta. A espera valeu cada segundo.</p>
+
+      <figure class="petition-figure" id="petitionFigure">
+        <img src="Imagem.jpg" alt="Registro do bolo de pote da Manuela" onerror="document.getElementById('petitionFigure').classList.add('img-missing')">
+        <figcaption>Registro histórico: o retorno triunfal do bolo de pote.</figcaption>
+      </figure>
+
+      <div class="mini-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-value" id="statSignatures">2.481</div>
+          <div class="mini-stat-label">comemorações</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-value" id="statComments">438</div>
+          <div class="mini-stat-label">comentários</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-value">99%</div>
+          <div class="mini-stat-label">aprovam o resultado</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Motivos ===== -->
+    <section>
+      <div class="section-title-row"><h2 class="section-title">Por que essa vitória importa</h2></div>
+      <div class="reasons-grid" id="reasonsGrid"></div>
+    </section>
+
+    <!-- ===== Comentários ===== -->
+    <section>
+      <div class="section-title-row">
+        <h2 class="section-title">Comentários da Comemoração</h2>
+        <span class="live-badge"><span class="live-dot"></span>Ao vivo</span>
+      </div>
+      <div class="comments-panel">
+        <div class="comments-list" id="commentsList"></div>
+        <p class="loading-dots">mais comemorações chegando<span>.</span><span>.</span><span>.</span></p>
+      </div>
+    </section>
+
+    <!-- ===== Depoimentos ===== -->
+    <section>
+      <div class="section-title-row"><h2 class="section-title">Depoimentos</h2></div>
+      <div class="testimonials">
+        <blockquote class="testimonial">Consegui meu bolo de pote de volta, e valeu cada segundo de espera.<cite>— Pinguelos User</cite></blockquote>
+        <blockquote class="testimonial">Não pedimos muito, só queríamos os bolos. E conseguimos.<cite>— Pinguelos User</cite></blockquote>
+        <blockquote class="testimonial">Manuela ouviu o povo. E o povo comeu.<cite>— Pinguelos User</cite></blockquote>
+        <blockquote class="testimonial">O antes e o depois da minha felicidade têm uma data: o dia em que os bolos voltaram.<cite>— Pinguelos User Oficial</cite></blockquote>
+        <blockquote class="testimonial">Já pensei em mudar de bairro. Hoje nem cogito, porque o bolo está aqui de novo.<cite>— Pinguelos User 2</cite></blockquote>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Esta petição é uma brincadeira.</p>
+    <p>Feita pelo povo que trouxe os bolos de pote de volta.</p>
+    <p><strong>Obrigado, Manuela. Valeu a pena esperar.</strong></p>
+  </footer>
+
+  <!-- ===== Modal de agradecimento ===== -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+
+      <form id="signForm">
+        <h3 id="modalTitle">Deixe seu agradecimento</h3>
+        <label>Nome
+          <input type="text" id="nameInput" maxlength="40" placeholder="Seu nome" required>
+        </label>
+        <label>Por que você está feliz com a volta dos bolos de pote
+          <textarea id="reasonInput" maxlength="200" placeholder="Escreva aqui a sua mensagem..." required></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn-text" id="cancelBtn">Cancelar</button>
+          <button type="submit" class="btn-primary" id="submitBtn">Enviar agradecimento</button>
+        </div>
+      </form>
+
+      <div class="modal-success" id="modalSuccess" hidden>
+        <svg class="check-icon" viewBox="0 0 52 52">
+          <circle class="check-circle" cx="26" cy="26" r="24"/>
+          <path class="check-mark" d="M14 27l7 7 17-17"/>
+        </svg>
+        <h3>Agradecimento registrado!</h3>
+        <p>Obrigado por comemorar com a gente.</p>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ============================================================
+     DADOS
+     ============================================================ */
+  var comentarios = [
+    "GENTE, CONSEGUIMOS! O bolo de pote voltou!",
+    "Chorei de alegria quando vi o primeiro pote na prateleira de novo.",
+    "Manuela ouviu o povo. Isso é história sendo feita.",
+    "Já comi três hoje. Não me arrependo de nada.",
+    "A espera valeu cada segundo. Esse bolo está ainda mais gostoso.",
+    "Avisei a família toda. Hoje tem festa.",
+    "Guardei o pote vazio esse tempo todo de lembrança, e agora ele ganhou um par.",
+    "Meu grupo da família finalmente está falando de outra coisa: do bolo que voltou!",
+    "Fiz questão de ser a primeira da fila. Valeu muito a pena.",
+    "A luta foi justa e a vitória é de todos nós.",
+    "Meu papagaio ainda fala 'bolo de pote', mas agora é comemoração.",
+    "Se isso não é motivo de feriado municipal, eu não sei o que é.",
+    "Já liguei pra Manuela agradecendo. Ela ficou emocionada.",
+    "O bairro inteiro está em festa. Literalmente.",
+    "Essa petição vai virar filme. E vai ter um final feliz de verdade.",
+    "Coloquei uma colher extra só de comemoração.",
+    "Minha terapeuta disse que essa vitória também é sobre mim. Ela tem razão.",
+    "Cancelei a busca por bolos substitutos. Não precisamos mais deles.",
+    "O documentário particular da minha espera agora tem um final digno.",
+    "Os potes vazios que guardei viraram estoque de novo.",
+    "Voltei a acreditar em finais felizes.",
+    "Essa é a prova de que o povo unido nunca é vencido, nem pela falta de bolo.",
+    "Já assinei de novo, só que dessa vez pra dizer obrigado.",
+    "Meu documentário vai ganhar um prêmio de melhor reviravolta com sobremesa.",
+    "Nunca imaginei que ia chorar de felicidade por causa de um bolo. Mas aqui estou.",
+    "Voltei na loja e o cheiro é exatamente como eu lembrava.",
+    "Assinei a petição, e hoje assino embaixo: valeu a pena esperar.",
+    "Meu chefe perguntou por que eu sorri o dia inteiro. Eu disse que foi o bolo.",
+    "Passei na porta da loja só pra ver a placa aberta de novo. Emocionante.",
+    "A colherzinha de lembrança virou colherzinha de uso diário de novo.",
+    "Ninguém no grupo da família fala de outra coisa há dias: só elogios pro bolo.",
+    "Testei a receita de novo e confirmo: o sabor está intacto.",
+    "Meu documentário particular sobre essa espera ganhou um episódio bônus: a volta.",
+    "Fiz uma playlist só para comemorar a volta dos bolos de pote.",
+    "Se essa vitória não for motivo de festa, eu não sei o que é.",
+    "Meu lembrete diário virou lembrete de comprar bolo. Melhor mudança de rotina da minha vida.",
+    "A saudade acabou. E o gosto continua perfeito.",
+    "Já fiz fila duas vezes só pra sentir esse momento de novo.",
+    "Hoje é dia de comemorar: contamos, torcemos, e vencemos.",
+    "Levei bolo pro escritório inteiro. Ninguém trabalhou direito depois.",
+    "Fizemos história. E a história tem sabor de bolo de pote.",
+    "Minha avó provou de novo e disse que valeu a espera inteira.",
+    "Se existisse um troféu para essa causa, o povo levaria pra casa.",
+    "Voltei a acreditar no poder de uma boa petição de brincadeira.",
+    "O grupo que só falava de saudade agora só fala de festa."
+  ];
+
+  var comentariosRaros = [
+    { nome:"Ygona", texto:"MEO, CONSEGUIMOSSS! O BOLO DE POTE VOLTOUUU!!!" },
+    { nome:"Cleiton do Posto 4", texto:"Já liguei pro SAC da vida só pra avisar que virou final feliz." },
+    { nome:"Zé do Bolo (não é a Manuela)", texto:"Parei de tentar fazer o meu. Voltei a comprar o original, como devia ser." },
+    { nome:"Tia Roseli", texto:"Meu grupo da igreja trocou a corrente de oração por uma corrente de parabéns." },
+    { nome:"Usuária Desesperada99", texto:"Reativei o wifi só pra postar sobre essa vitória." },
+    { nome:"Anônimo Nostálgico", texto:"Tirei o potinho vazio da estante. Ele finalmente pode se aposentar." }
+  ];
+
+  var nomesVariantes = [
+    "Pinguelos User","Pinguelos User","Pinguelos User","Pinguelos User","Pinguelos User",
+    "Pinguelos User 2","Pinguelos User Oficial","Pinguelos User (com fome)",
+    "Pinguelos User Sênior","Pinguelos User Anônimo"
+  ];
+
+  var mensagensTicker = [
+    "Nova comemoração recebida.",
+    "Mais uma pessoa está celebrando.",
+    "Pinguelos User acabou de comemorar.",
+    "Novo comentário de alegria recebido.",
+    "Alguém acabou de celebrar a volta dos bolos.",
+    "Mais um apoiador entrou na festa.",
+    "Um novo agradecimento chegou agora."
+  ];
+
+  var motivos = [
+    { texto:"Porque a saudade finalmente acabou.",
+      icone:'<path d="M12 21s-7-4.35-9.5-8.5C.8 9.5 2 6 5.5 6c2 0 3.5 1.2 4.5 2.7C11 7.2 12.5 6 14.5 6 18 6 19.2 9.5 17.5 12.5 15 16.65 12 21 12 21z"/>' },
+    { texto:"Porque a espera valeu cada segundo.",
+      icone:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>' },
+    { texto:"Porque bolo de pote é ainda mais gostoso depois de tanta saudade.",
+      icone:'<path d="M7 8h10l-1 11a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2L7 8z"/><path d="M6 8h12"/><path d="M9 5h6l1 3H8l1-3z"/>' },
+    { texto:"Porque ninguém vai precisar passar por isso de novo.",
+      icone:'<circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2c2.7.4 4.5 2.4 4.5 5.3"/>' },
+    { texto:"Porque Manuela ouviu a voz do povo.",
+      icone:'<path d="M3 10v4a1 1 0 0 0 1 1h2l6 4V5L6 9H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/><path d="M20 7a7 7 0 0 1 0 10"/>' }
+  ];
+
+  /* ============================================================
+     ESTADO
+     ============================================================ */
+  var META = 2000;
+  var assinaturas = 2481;
+  var totalComentarios = 438;
+  var assinaturasExibidas = assinaturas;
+  var comentariosExibidos = totalComentarios;
+  var poolEmbaralhado = embaralhar(comentarios.slice());
+  var indicePool = 0;
+
+  /* ============================================================
+     UTILITÁRIOS
+     ============================================================ */
+  function embaralhar(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function formatarNumero(n){
+    return n.toLocaleString('pt-BR');
+  }
+
+  function escaparTexto(str){
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function nomeAleatorio(){
+    return nomesVariantes[Math.floor(Math.random() * nomesVariantes.length)];
+  }
+
+  function animarNumero(elemento, de, para, duracaoMs){
+    var inicio = null;
+    function passo(timestamp){
+      if(!inicio) inicio = timestamp;
+      var progresso = Math.min((timestamp - inicio) / duracaoMs, 1);
+      var eased = 1 - Math.pow(1 - progresso, 3);
+      var valorAtual = Math.round(de + (para - de) * eased);
+      elemento.textContent = formatarNumero(valorAtual);
+      if(progresso < 1){ requestAnimationFrame(passo); }
+      else { elemento.textContent = formatarNumero(para); }
+    }
+    requestAnimationFrame(passo);
+  }
+
+  /* ============================================================
+     ESTATÍSTICAS
+     ============================================================ */
+  var elSignatureCount = document.getElementById('signatureCount');
+  var elStatSignatures = document.getElementById('statSignatures');
+  var elStatComments = document.getElementById('statComments');
+  var elProgressFill = document.getElementById('progressFill');
+  var elProgressPercent = document.getElementById('progressPercent');
+  var elProgressRemaining = document.getElementById('progressRemaining');
+  var elStickyCount = document.getElementById('stickyCount');
+  var elStickyBarFill = document.getElementById('stickyBarFill');
+
+  function atualizarStats(bump){
+    if(assinaturasExibidas !== assinaturas){
+      animarNumero(elSignatureCount, assinaturasExibidas, assinaturas, 650);
+      animarNumero(elStatSignatures, assinaturasExibidas, assinaturas, 650);
+      assinaturasExibidas = assinaturas;
+    }
+    if(comentariosExibidos !== totalComentarios){
+      animarNumero(elStatComments, comentariosExibidos, totalComentarios, 500);
+      comentariosExibidos = totalComentarios;
+    }
+
+    var pct = Math.min(100, (assinaturas / META) * 100);
+    var escala = pct / 100;
+    elProgressFill.style.transform = 'scaleX(' + escala + ')';
+    elProgressPercent.textContent = Math.round(pct) + '%';
+    elProgressRemaining.textContent = assinaturas >= META ? 'Meta superada! 🎉' : (formatarNumero(META - assinaturas) + ' para a meta');
+    elStickyCount.textContent = formatarNumero(assinaturas) + ' comemorando';
+    elStickyBarFill.style.transform = 'scaleX(' + escala + ')';
+
+    if(bump){
+      elSignatureCount.classList.add('bump');
+      setTimeout(function(){ elSignatureCount.classList.remove('bump'); }, 320);
+    }
+  }
+
+  /* ============================================================
+     TOASTS (atualizações em tempo real)
+     ============================================================ */
+  var filaToasts = [];
+  var toastVisivel = false;
+  var toastContainer = document.getElementById('toastContainer');
+
+  function mostrarToast(msg){
+    filaToasts.push(msg);
+    processarFilaToasts();
+  }
+
+  function processarFilaToasts(){
+    if(toastVisivel || filaToasts.length === 0) return;
+    toastVisivel = true;
+    var msg = filaToasts.shift();
+    var el = document.createElement('div');
+    el.className = 'toast';
+    el.textContent = msg;
+    toastContainer.appendChild(el);
+    requestAnimationFrame(function(){ el.classList.add('show'); });
+    setTimeout(function(){
+      el.classList.remove('show');
+      setTimeout(function(){
+        el.remove();
+        toastVisivel = false;
+        processarFilaToasts();
+      }, 400);
+    }, 3200);
+  }
+
+  /* ============================================================
+     COMENTÁRIOS
+     ============================================================ */
+  var listaComentarios = document.getElementById('commentsList');
+
+  function criarLinhaComentario(nome, texto, proprio){
+    var row = document.createElement('div');
+    row.className = 'comment-row' + (proprio ? ' own' : '');
+    row.innerHTML =
+      '<div class="comment-avatar" aria-hidden="true">' + escaparTexto(nome.charAt(0).toUpperCase()) + '</div>' +
+      '<div class="comment-body">' +
+        '<div class="comment-name">' + escaparTexto(nome) + ' <span class="tag">comentou</span></div>' +
+        '<div class="comment-text">' + escaparTexto(texto) + '</div>' +
+      '</div>';
+    return row;
+  }
+
+  function adicionarComentario(nome, texto, proprio){
+    var row = criarLinhaComentario(nome, texto, !!proprio);
+    listaComentarios.appendChild(row);
+    totalComentarios++;
+
+    var rect = listaComentarios.getBoundingClientRect();
+    var visivel = rect.top < window.innerHeight && rect.bottom > 0;
+
+    atualizarStats(false);
+
+    if(visivel){
+      row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    if(!proprio){
+      var vaiAssinarTambem = Math.random() < 0.45;
+      if(vaiAssinarTambem){
+        assinaturas += Math.floor(Math.random() * 3) + 1;
+        atualizarStats(false);
+        mostrarToast(Math.random() < 0.6 ? (nome + ' acabou de comemorar.') : mensagensTicker[Math.floor(Math.random() * mensagensTicker.length)]);
+      } else if(Math.random() < 0.3){
+        mostrarToast(mensagensTicker[Math.floor(Math.random() * mensagensTicker.length)]);
+      }
+    }
+  }
+
+  function proximoComentarioDoPool(){
+    if(indicePool >= poolEmbaralhado.length){
+      poolEmbaralhado = embaralhar(comentarios.slice());
+      indicePool = 0;
+    }
+    return poolEmbaralhado[indicePool++];
+  }
+
+  function proximoComentarioAleatorio(){
+    if(Math.random() < 0.12 && comentariosRaros.length){
+      var raro = comentariosRaros[Math.floor(Math.random() * comentariosRaros.length)];
+      return { nome: raro.nome, texto: raro.texto };
+    }
+    return { nome: nomeAleatorio(), texto: proximoComentarioDoPool() };
+  }
+
+  function agendarProximoComentario(){
+    var atraso = 3500 + Math.random() * 5500;
+    setTimeout(function(){
+      var c = proximoComentarioAleatorio();
+      adicionarComentario(c.nome, c.texto, false);
+      agendarProximoComentario();
+    }, atraso);
+  }
+
+  function mostrarEsqueleto(){
+    for(var i = 0; i < 3; i++){
+      var sk = document.createElement('div');
+      sk.className = 'comment-row skeleton';
+      sk.innerHTML =
+        '<div class="comment-avatar skeleton-block" aria-hidden="true"></div>' +
+        '<div class="comment-body">' +
+          '<div class="skeleton-line w35"></div>' +
+          '<div class="skeleton-line w75"></div>' +
+        '</div>';
+      listaComentarios.appendChild(sk);
+    }
+  }
+
+  function limparEsqueleto(){
+    var skeletons = listaComentarios.querySelectorAll('.skeleton');
+    skeletons.forEach(function(s){ s.remove(); });
+  }
+
+  function revelacaoInicial(){
+    var total = 5;
+    var i = 0;
+    function proximo(){
+      if(i >= total){ agendarProximoComentario(); return; }
+      var c = proximoComentarioAleatorio();
+      adicionarComentario(c.nome, c.texto, false);
+      i++;
+      setTimeout(proximo, 550);
+    }
+    proximo();
+  }
+
+  /* ============================================================
+     MOTIVOS (reveal ao rolar)
+     ============================================================ */
+  function montarMotivos(){
+    var grid = document.getElementById('reasonsGrid');
+    motivos.forEach(function(m){
+      var card = document.createElement('div');
+      card.className = 'reason-card';
+      card.innerHTML =
+        '<div class="reason-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + m.icone + '</svg></div>' +
+        '<div class="reason-text">' + escaparTexto(m.texto) + '</div>';
+      grid.appendChild(card);
+    });
+
+    if('IntersectionObserver' in window){
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reason-card').forEach(function(c){ obs.observe(c); });
+    } else {
+      document.querySelectorAll('.reason-card').forEach(function(c){ c.classList.add('visible'); });
+    }
+  }
+
+  /* ============================================================
+     BARRA FIXA DE ASSINATURA
+     ============================================================ */
+  var stickyCta = document.getElementById('stickyCta');
+  var heroSignBtn = document.getElementById('signBtn');
+
+  if('IntersectionObserver' in window){
+    var stickyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        stickyCta.classList.toggle('show', !entry.isIntersecting);
+      });
+    }, { threshold: 0 });
+    stickyObs.observe(heroSignBtn);
+  }
+
+  /* ============================================================
+     MODAL DE ASSINATURA
+     ============================================================ */
+  var modal = document.getElementById('modalOverlay');
+  var nameInput = document.getElementById('nameInput');
+  var reasonInput = document.getElementById('reasonInput');
+  var signForm = document.getElementById('signForm');
+  var modalSuccess = document.getElementById('modalSuccess');
+  var submitBtn = document.getElementById('submitBtn');
+
+  function abrirModal(){
+    modal.classList.add('open');
+    setTimeout(function(){ nameInput.focus(); }, 60);
+  }
+
+  function fecharModal(){
+    modal.classList.remove('open');
+    setTimeout(function(){
+      signForm.reset();
+      signForm.hidden = false;
+      modalSuccess.hidden = true;
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar agradecimento';
+    }, 250);
+  }
+
+  document.getElementById('signBtn').addEventListener('click', abrirModal);
+  document.getElementById('signBtnSticky').addEventListener('click', abrirModal);
+  document.getElementById('cancelBtn').addEventListener('click', fecharModal);
+  document.getElementById('enterBtn').addEventListener('click', function(){
+    document.getElementById('sobreSection').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  modal.addEventListener('click', function(e){
+    if(e.target === modal) fecharModal();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('open')) fecharModal();
+  });
+
+  signForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var nome = nameInput.value.trim() || 'Pinguelos User';
+    var motivo = reasonInput.value.trim();
+    if(!motivo) return;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Enviando...';
+
+    setTimeout(function(){
+      signForm.hidden = true;
+      modalSuccess.hidden = false;
+
+      assinaturas += 1;
+      adicionarComentario(nome, motivo, true);
+      atualizarStats(true);
+      mostrarToast(nome + ' acabou de comemorar.');
+
+      setTimeout(fecharModal, 1500);
+    }, 550);
+  });
+
+  /* ============================================================
+     ÁUDIO DE FUNDO
+     ============================================================ */
+  var audio = document.getElementById('bgAudio');
+  var audioWidget = document.getElementById('audioWidget');
+  var audioToggle = document.getElementById('audioToggle');
+  var volumeSlider = document.getElementById('volumeSlider');
+
+  var ICONE_PLAY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  var ICONE_PAUSE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
+
+  audio.volume = volumeSlider.value / 100;
+
+  function definirEstadoAudio(tocando){
+    audioWidget.classList.toggle('playing', tocando);
+    audioToggle.innerHTML = tocando ? ICONE_PAUSE : ICONE_PLAY;
+    audioToggle.setAttribute('aria-label', tocando ? 'Pausar música' : 'Tocar música');
+  }
+
+  var audioJaTentado = false;
+  function tentarAutoplay(){
+    if(audioJaTentado) return;
+    audioJaTentado = true;
+    audio.play().then(function(){
+      definirEstadoAudio(true);
+    }).catch(function(){
+      definirEstadoAudio(false);
+    });
+  }
+  document.addEventListener('click', tentarAutoplay, { once: true });
+
+  audioToggle.addEventListener('click', function(){
+    audioJaTentado = true;
+    if(audio.paused){
+      audio.play().then(function(){ definirEstadoAudio(true); }).catch(function(){});
+    } else {
+      audio.pause();
+      definirEstadoAudio(false);
+    }
+  });
+
+  volumeSlider.addEventListener('input', function(){
+    audio.volume = volumeSlider.value / 100;
+  });
+
+  audio.addEventListener('error', function(){ /* arquivo de áudio ausente: ignora silenciosamente */ });
+
+  /* ============================================================
+     BARRA DE PROGRESSO DE ROLAGEM
+     ============================================================ */
+  var scrollProgressEl = document.getElementById('scrollProgress');
+  function atualizarProgressoScroll(){
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgressEl.style.transform = 'scaleX(' + (pct / 100) + ')';
+  }
+  var scrollTicking = false;
+  window.addEventListener('scroll', function(){
+    if(!scrollTicking){
+      scrollTicking = true;
+      requestAnimationFrame(function(){
+        atualizarProgressoScroll();
+        scrollTicking = false;
+      });
+    }
+  }, { passive: true });
+
+  /* ============================================================
+     INICIALIZAÇÃO
+     ============================================================ */
+  document.addEventListener('DOMContentLoaded', function(){
+    atualizarStats(false);
+    definirEstadoAudio(false);
+    montarMotivos();
+    atualizarProgressoScroll();
+    mostrarEsqueleto();
+    setTimeout(function(){
+      limparEsqueleto();
+      revelacaoInicial();
+    }, 600);
+  });
+
+})();
+</script>
+</body>
+</html>
